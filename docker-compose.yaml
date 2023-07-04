@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+  next:
+    build:
+      context: ./next
+      dockerfile: ./Dockerfile
+    networks:
+      - next-nest
+    ports:
+      - 8080:8080
+    container_name: next
+    volumes:
+      - ./next:/next
+  nest:
+    build:
+      context: ./nest
+      dockerfile: ./Dockerfile
+    networks:
+      - next-nest
+    ports:
+      - 8001:8001
+    container_name: nest
+    volumes:
+      - ./nest:/nest
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: ./Dockerfile
+    depends_on:
+      - next
+      - nest
+    ports:
+      - 80:80
+    networks:
+      - rtc
+    container_name: proxy
+  mysql:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    container_name: mysql
+networks:
+  next-nest:
+    driver: bridge
