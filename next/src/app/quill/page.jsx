@@ -1,28 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Editor from "../../components/quill";
+import Editor from "../../components/jodit";
 
 export default function App() {
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    setEditorLoaded(true);
-  }, []);
+  const [value, setValue] = useState("");
+  const handleChange = (value) => {
+    console.log(value);
+  };
 
   return (
     <div className="App">
-      <h1>ckEditor 5</h1>
-
-      <Editor
-        name="description"
-        onChange={(data) => {
-          setData(data);
-        }}
-        editorLoaded={editorLoaded}
-      />
-
-      {JSON.stringify(data)}
+      <Editor name="description" initValue={value} onChange={handleChange} />
     </div>
   );
 }

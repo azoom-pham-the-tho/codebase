@@ -1,0 +1,15 @@
+.layout {
+  display: flex;
+  justify-content: space-between;
+}
+
+.writing {
+  width: 70%;
+}
+.info {
+  margin: 0 20px;
+  width: 30%;
+}
+.title{
+    margin: 0;
+}
