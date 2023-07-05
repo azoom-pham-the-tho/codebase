@@ -9,14 +9,9 @@ export default function Detail() {
     setDataRender(JSON.parse(data || ""));
   }, []);
   return (
-    <div className={styles.layout}>
-      <div className={styles.content}>
-        <div
-          className={styles.innerHTML}
-           dangerouslySetInnerHTML={{ __html: dataRender }}
-        />
-      </div>
-      <div className={styles.sidebar}></div>
-    </div>
+    <div
+      className={styles.innerHTML}
+      dangerouslySetInnerHTML={{ __html: dataRender }}
+    />
   );
 }
